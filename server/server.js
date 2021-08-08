@@ -1,35 +1,22 @@
-//require("rootpath")();
 const express = require("express");
 const app = express();
-// require("dotenv").config();
 const morgan = require("morgan");
-// const config = require("./config.json");
-// const cookieParser = require("cookie-parser");
+const config = require("./configs/config.json");
+require("./configs/mongoose");
+
 const cors = require("cors");
 // const errorHandler = require("./_helpers/error-handler");
-// const db = require("./_helpers/db");
+
 // parse requests of content-type - application/json
-app.use(express.json()); /* bodyParser.json() is deprecated */
+app.use(express.json());
 
 // for log
 app.use(morgan("tiny"));
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(
-  express.urlencoded({ extended: true })
-); /* bodyParser.urlencoded() is deprecated */
-
-// app.use(cookieParser());
-
-// const APIRoutes = require("./routes/api.route");
+app.use(express.urlencoded({ extended: true }));
+const APIRoutes = require("./routes/api.route");
 
 // allow cors requests from any origin and with credentials
-
-// var corsOptions = {
-//   origin: "http://localhost:8081"
-// };
-// app.use(cors(corsOptions));
-// app.use(cors);
-// app.options("*", cors);
 app.use(
   cors({
     origin: (origin, callback) => callback(null, true),
@@ -38,21 +25,17 @@ app.use(
 );
 
 // api routes
-// const api = config.API_URL;
-// app.use(`${api}/`, APIRoutes);
+const api = config.API_URL;
+app.use(`${api}/`, APIRoutes);
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to React Node Application." });
+  res.json({ message: "Welcome to Ecommerce Application." });
 });
-
-// swagger docs route
-//app.use("/api-docs", require("_helpers/swagger"));
 
 // global error handler
 // app.use(errorHandler);
 
 // start server
-const port =
-  process.env.NODE_ENV === "production" ? process.env.PORT || 80 : 3001;
+const port = config.PORT;
 app.listen(port, () => console.log("Server listening on port " + port));
