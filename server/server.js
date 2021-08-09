@@ -33,9 +33,15 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Ecommerce Application." });
 });
 
-// global error handler
-// app.use(errorHandler);
-
 // start server
 const port = config.PORT;
 app.listen(port, () => console.log("Server listening on port " + port));
+
+//For error handling
+app.use(function (err, req, res, next) {
+  console.log("Error handling middleware", err);
+  res.status(err.status || 400).json({
+    message: err.message || err,
+    status: err.status || 400,
+  });
+});
