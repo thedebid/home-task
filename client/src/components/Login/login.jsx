@@ -25,9 +25,9 @@ function Login() {
     httpClient
       .POST("auth/login", login, false)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         localStorage.setItem("token", response.data.result.token);
-        // localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("user", JSON.stringify(response.data.result.user));
         localStorage.setItem("isLoggedIn", true);
         history.push("/");
       })

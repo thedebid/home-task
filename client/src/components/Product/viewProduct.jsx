@@ -4,9 +4,10 @@ import httpClient from "./../../utils/httpClient";
 
 function ViewProduct() {
   const [products, setProducts] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     httpClient
-      .GET("/product")
+      .GET("/product/" + user._id)
       .then((result) => {
         // console.log(result);
         setProducts(result.data);
@@ -17,11 +18,10 @@ function ViewProduct() {
       .finally(() => {
         //
       });
-  }, []);
+  }, [user._id]);
 
   return (
     <>
-      {/* <Nav /> */}
       <div className="container mydiv">
         <Product products={products} />
       </div>
