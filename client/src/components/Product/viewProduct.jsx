@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import Product from "../Product/product";
+import react, { useEffect, useState } from "react";
+import Product from "./product";
 import httpClient from "./../../utils/httpClient";
-// import Nav from "./../Nav/nav";
-function Home() {
-  const [products, setProducts] = useState([]);
 
+function ViewProduct() {
+  const [products, setProducts] = useState([]);
   useEffect(() => {
     httpClient
       .GET("/product")
@@ -22,10 +21,12 @@ function Home() {
 
   return (
     <>
+      {/* <Nav /> */}
       <div className="container mydiv">
         <Product products={products} />
       </div>
     </>
   );
 }
-export default Home;
+
+export default ViewProduct;
