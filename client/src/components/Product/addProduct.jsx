@@ -1,6 +1,8 @@
 import react, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import httpClient from "./../../utils/httpClient";
 function AddProduct() {
+  let history = useHistory();
   const [product, setProduct] = useState({
     title: "",
     description: "",
@@ -26,6 +28,7 @@ function AddProduct() {
       .POST("/product", product, true)
       .then((response) => {
         console.log(response.data);
+        history.replace("/viewProduct");
       })
       .catch((err) => {
         console.log(err);
