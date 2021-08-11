@@ -1,38 +1,81 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import httpClient from "./../../utils/httpClient";
 function Register() {
+  let history = useHistory();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setUser((prevProduct) => {
+      return {
+        ...prevProduct,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    console.log(user);
+    httpClient
+      .POST("auth/register", user, false)
+      .then((response) => {
+        console.log(response);
+        history.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
-      <div class="login-form">
+      <div className="login-form">
         <form action="/examples/actions/confirmation.php" method="post">
-          <h2 class="text-center">Sign up</h2>
-          <div class="form-group">
+          <h2 className="text-center">Sign up</h2>
+          <div className="form-group">
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               placeholder="Email"
               required="required"
+              name="email"
+              onChange={handleChange}
+              value={user.email}
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <input
               type="password"
-              class="form-control"
+              name="password"
+              className="form-control"
               placeholder="Password"
               required="required"
+              onChange={handleChange}
+              value={user.password}
             />
           </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">
+          <div className="form-group">
+            <button
+              type="submit"
+              className="btn btn-primary btn-block"
+              onClick={handleClick}
+            >
               Register
             </button>
           </div>
-          <div class="clearfix">
-            <a href="#" class="pull-right">
+          <div className="clearfix">
+            <a href="#" className="pull-right">
               Forgot Password?
             </a>
           </div>
         </form>
-        <p class="text-center">
+        <p className="text-center">
           Already have an account?
           <Link to="/login"> Login </Link>
         </p>
