@@ -1,4 +1,5 @@
 function Product(data) {
+  let imgUrl = "http://localhost:3001/file/images/";
   return (
     <div className="row">
       {data.products.length > 0 ? (
@@ -8,7 +9,7 @@ function Product(data) {
               <div className="bbb_deals_slider_container">
                 <div className=" bbb_deals_item">
                   <div className="bbb_deals_image">
-                    <img src="https://i.imgur.com/9UYzfny.png" alt="" />
+                    <img src={`${imgUrl}${product.image}`} alt="" />
                   </div>
                   <div className="bbb_deals_content">
                     <div className="bbb_deals_info_line d-flex flex-row justify-content-start">

@@ -5,7 +5,7 @@ const productController = require("./product.controller");
 const upload = require("./../../middlewares/uploader");
 router
   .route("/")
-  .post(authorize, upload.single("image"), productController.createProduct)
+  .post(authorize, upload.single("img"), productController.createProduct)
   .get(productController.getProducts);
 
 router.route("/:id").get(productController.getProductByUser);

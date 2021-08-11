@@ -1,6 +1,8 @@
 const productService = require("./product.service");
 
 function createProduct(req, res) {
+  //console.log(req.body);
+  // console.log(req.file);
   productService
     .save(req.body, req.user, req.file.filename)
     .then(function (result) {

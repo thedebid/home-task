@@ -32,9 +32,45 @@ function GET(url, isSecure = true, params = {}) {
   });
 }
 
+function UPLOAD(method, url, data = {}, files = []) {
+  return new Promise((resolve, reject) => {
+    // send xml http request to upload file
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+
+    if (files.length) {
+      files.forEach((item, i) => {
+        formData.append("img", files[i], files[i].name);
+      });
+    }
+
+    for (let key in data) {
+      formData.append(key, data[key]);
+    }
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          resolve(xhr.response);
+        } else {
+          reject(xhr.response);
+        }
+      }
+    };
+
+    xhr.open(
+      method,
+      `${BaseURL}${url}?token=${localStorage.getItem("token")}`,
+      true
+    );
+    xhr.send(formData);
+  });
+}
+
 const exportedObject = {
   POST,
   GET,
+  UPLOAD,
 };
 
 export default exportedObject;

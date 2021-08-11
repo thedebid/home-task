@@ -3,15 +3,19 @@ import { useHistory } from "react-router-dom";
 import httpClient from "./../../utils/httpClient";
 function AddProduct() {
   let history = useHistory();
+  const [filesToUpload, setFilesToUpload] = useState([]);
   const [product, setProduct] = useState({
     title: "",
     description: "",
     price: 0,
-    image: "",
   });
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, type, value, files } = event.target;
+
+    if (type === "file") {
+      filesToUpload.push(files[0]);
+    }
 
     setProduct((prevProduct) => {
       return {
@@ -23,9 +27,9 @@ function AddProduct() {
 
   const handleClick = (event) => {
     event.preventDefault();
-    console.log(product);
+    //console.log(filesToUpload);
     httpClient
-      .POST("/product", product, true)
+      .UPLOAD("POST", "/product", product, filesToUpload)
       .then((response) => {
         console.log(response.data);
         history.replace("/viewProduct");
@@ -80,6 +84,8 @@ function AddProduct() {
               <br />
               <input
                 type="file"
+                name="image"
+                onChange={handleChange}
                 className="form-control-file"
                 id="exampleFormControlFile1"
               />

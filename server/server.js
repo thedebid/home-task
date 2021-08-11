@@ -3,9 +3,8 @@ const app = express();
 const morgan = require("morgan");
 const config = require("./configs/config.json");
 require("./configs/mongoose");
-
+const path = require("path");
 const cors = require("cors");
-// const errorHandler = require("./_helpers/error-handler");
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -23,6 +22,9 @@ app.use(
     credentials: true,
   })
 );
+// inbuilt middleware for serving static files
+app.use(express.static("uploads")); // internal usage within express application
+app.use("/file", express.static(path.join(__dirname, "uploads")));
 
 // api routes
 const api = config.API_URL;
