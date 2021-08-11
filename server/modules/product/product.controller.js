@@ -1,9 +1,8 @@
 const productService = require("./product.service");
 
 function createProduct(req, res) {
-  // console.log(req.user);
   productService
-    .save(req.body, req.user)
+    .save(req.body, req.user, req.file.filename)
     .then(function (result) {
       res.status(200).json(result);
     })

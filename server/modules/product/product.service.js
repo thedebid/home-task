@@ -11,12 +11,12 @@ function getByUserId(id) {
 }
 
 //save products
-function save(product, user) {
+function save(product, user, image) {
   var newProduct = new productModel({});
   newProduct.title = product.title;
   newProduct.description = product.description;
   newProduct.price = product.price;
-  newProduct.image = product.image;
+  newProduct.image = image;
   newProduct.user = user._id;
   return newProduct.save();
 }

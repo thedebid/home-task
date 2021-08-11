@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const authorize = require("./../../middlewares/authorize");
-
 const productController = require("./product.controller");
-
+const upload = require("./../../middlewares/uploader");
 router
   .route("/")
-  .post(authorize, productController.createProduct)
+  .post(authorize, upload.single("image"), productController.createProduct)
   .get(productController.getProducts);
 
 router.route("/:id").get(productController.getProductByUser);
