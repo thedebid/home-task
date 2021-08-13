@@ -3,8 +3,13 @@ const productService = require("./product.service");
 function createProduct(req, res) {
   //console.log(req.body);
   // console.log(req.file);
+  var file = "";
+  // console.log(req.file);
+  if (req.file) {
+    file = req.file.filename;
+  }
   productService
-    .save(req.body, req.user, req.file.filename)
+    .save(req.body, req.user, file)
     .then(function (result) {
       res.status(200).json(result);
     })

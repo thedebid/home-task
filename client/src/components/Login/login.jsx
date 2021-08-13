@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import httpClient from "./../../utils/httpClient";
+import { toast } from "material-react-toastify";
+
 function Login() {
   let history = useHistory();
   const [login, setLogin] = useState({
@@ -26,13 +28,15 @@ function Login() {
       .POST("auth/login", login, false)
       .then((response) => {
         // console.log(response.data);
+        toast.success(response.data.message);
         localStorage.setItem("token", response.data.result.token);
         localStorage.setItem("user", JSON.stringify(response.data.result.user));
         localStorage.setItem("isLoggedIn", true);
         history.push("/");
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
+        //   toast("Sdvsd");
       });
   };
 

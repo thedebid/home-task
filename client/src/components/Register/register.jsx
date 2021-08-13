@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import httpClient from "./../../utils/httpClient";
+import { toast } from "material-react-toastify";
+
 function Register() {
   let history = useHistory();
   const [user, setUser] = useState({
@@ -25,11 +27,11 @@ function Register() {
     httpClient
       .POST("auth/register", user, false)
       .then((response) => {
-        console.log(response);
+        toast.success(response.data.message);
         history.push("/login");
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
       });
   };
 

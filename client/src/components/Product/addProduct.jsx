@@ -1,6 +1,8 @@
 import react, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import httpClient from "./../../utils/httpClient";
+import { toast } from "material-react-toastify";
+
 function AddProduct() {
   let history = useHistory();
   const [filesToUpload, setFilesToUpload] = useState([]);
@@ -31,11 +33,12 @@ function AddProduct() {
     httpClient
       .UPLOAD("POST", "/product", product, filesToUpload)
       .then((response) => {
-        console.log(response.data);
+        //   toast.success(response.data.message);
         history.replace("/viewProduct");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
+        toast.error(err.response.data.message);
       });
   };
 
